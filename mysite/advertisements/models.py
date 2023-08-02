@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib import admin
+from django.utils.html import format_html
 
 
 # Create your models here.
@@ -10,6 +12,22 @@ class Advertisement(models.Model):
     auction = models.BooleanField(help_text="Торг")
     create_ad = models.DateTimeField(auto_now_add=True)
     updated_ad = models.DateTimeField(auto_now=True)
+
+    @admin.display
+    def create_date(self):
+        from django.utils import timezone
+        if self.create_ad.date() == timezone.now().date():
+            create_time = self.create_ad.time().strftime("%H:%M")
+            return format_html("<span style='color: green'>Сегодня в {}</span>", create_time)
+        return self.create_ad.strftime("%d.%m.%Y - %H:%M")
+
+    @admin.display
+    def update_date(self):
+        from django.utils import timezone
+        if self.updated_ad.date() == timezone.now().date():
+            update_time = self.updated_ad.time().strftime("%H:%M")
+            return format_html("<span style='color: blue'>Сегодня в {}</span>", update_time)
+        return self.updated_ad.strftime("%d.%m.%Y - %H:%M")
 
     def __str__(self):
         return f'id={self.id} title={self.title}, price={self.price}'
