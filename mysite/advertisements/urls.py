@@ -9,3 +9,5 @@ urlpatterns = [
     path('login/', login, name='login'),
     path('profile/', profile, name='profile'),
 ]
+
+

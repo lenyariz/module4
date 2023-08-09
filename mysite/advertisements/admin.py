@@ -6,11 +6,11 @@ from .models import Advertisement
 
 @admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'price', 'create_date', 'update_date', 'auction']
+    list_display = ['id', 'title', 'price', 'create_date', 'update_date', 'auction', 'view_image']
     list_filter = ['auction']
     actions = ["mark_auction_as_true", "mark_auction_as_false"]
     fieldsets = (
-        ("Общее", {'fields': ('title', 'description'), 'classes': ['collapse']}),
+        ("Общее", {'fields': ('title', 'description', 'user', 'image'), 'classes': ['collapse']}),
         ("Финансы", {'fields': ('price', 'auction'), 'classes': ['collapse']})
     )
 
